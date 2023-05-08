@@ -27,21 +27,27 @@
                         include '../koneksi/koneksi.php';
 
                         if (isset($_POST['b1'])) {
+                            if ($_FILES['ft']['size'] > 5242880) {
+                                echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span></button>
+                                  <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                                  </div>';
+                            } else {
+                                $tmpf = $_FILES['ft']['tmp_name'];
+                                $nmf = $_FILES['ft']['name'];
+                                move_uploaded_file($tmpf, "../file/" . $nmf);
+                                $now = date('Y-m-d');
 
-                            $tmpf = $_FILES['ft']['tmp_name'];
-                            $nmf = $_FILES['ft']['name'];
-                            move_uploaded_file($tmpf, "../file/" . $nmf);
-                            $now = date('Y-m-d');
+                                $sql = mysqli_query($koneksi, "INSERT INTO tb_template values ('NULL','$_POST[judul]','$_POST[desk]','$nmf','$now', '$now')");
 
-                            $sql = mysqli_query($koneksi, "INSERT INTO tb_template values ('NULL','$_POST[judul]','$_POST[desk]','$nmf','$now', '$now')");
-
-                            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+                                echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil ditambah.
                                   </div>';
+                            }
                         }
-
                         ?>
                         <div class="col-lg-6">
 

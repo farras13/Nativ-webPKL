@@ -26,23 +26,30 @@
 
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
-
-          move_uploaded_file($tmpf, "../images/user/" . $nmf);
-
-          if ($_POST['pas_lama'] == $_POST['pas']) {
-            $pass = $_POST['pas'];
+          if ($_FILES['ft']['size'] > 5242880) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+              <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+              </div>';
           } else {
-            $pass = md5($_POST['pas']);
-          }
+            move_uploaded_file($tmpf, "../images/user/" . $nmf);
 
-          $sql = mysqli_query($koneksi, "UPDATE tb_adm_prodi SET nama='$_POST[nm]',jekel='$_POST[jekel]',email='$_POST[email]',alamat='$_POST[alamat]',foto='$nmf',username='$_POST[user]',password='$pass' WHERE kd_prodi='$_POST[id]'");
+            if ($_POST['pas_lama'] == $_POST['pas']) {
+              $pass = $_POST['pas'];
+            } else {
+              $pass = md5($_POST['pas']);
+            }
+
+            $sql = mysqli_query($koneksi, "UPDATE tb_adm_prodi SET nama='$_POST[nm]',jekel='$_POST[jekel]',email='$_POST[email]',alamat='$_POST[alamat]',foto='$nmf',username='$_POST[user]',password='$pass' WHERE kd_prodi='$_POST[id]'");
 
 
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil diedit.
                                   </div>';
+          }
         }
       }
       ?>
@@ -58,7 +65,7 @@
 
                 <?php
 
-                  $q = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_adm_prodi where kd_prodi='$_SESSION[id]'"));
+                $q = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_adm_prodi where kd_prodi='$_SESSION[id]'"));
                 ?>
                 <img class="profile-user-img img-responsive img-circle" src="../images/user/<?= $q['foto'] ?>" alt="User profile picture">
 
@@ -179,24 +186,31 @@
 
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
-
-          move_uploaded_file($tmpf, "../images/user/" . $nmf);
-          if ($_POST['pas_lama'] == $_POST['pas']) {
-            $pass = $_POST['pas'];
+          if ($_FILES['ft']['size'] > 5242880) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+              <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+              </div>';
           } else {
-            $pass = md5($_POST['pas']);
-          }
+            move_uploaded_file($tmpf, "../images/user/" . $nmf);
+            if ($_POST['pas_lama'] == $_POST['pas']) {
+              $pass = $_POST['pas'];
+            } else {
+              $pass = md5($_POST['pas']);
+            }
 
-          $sql = mysqli_query($koneksi, "UPDATE tb_instansi SET nm_instansi='$_POST[nm]',telp='$_POST[telp]',fax='$_POST[fax]',email='$_POST[email]',alamat='$_POST[alamat]',web='$_POST[web]',logo='$nmf',username='$_POST[user]',password='$pass' WHERE kd_instansi='$_POST[id]'");
+            $sql = mysqli_query($koneksi, "UPDATE tb_instansi SET nm_instansi='$_POST[nm]',telp='$_POST[telp]',fax='$_POST[fax]',email='$_POST[email]',alamat='$_POST[alamat]',web='$_POST[web]',logo='$nmf',username='$_POST[user]',password='$pass' WHERE kd_instansi='$_POST[id]'");
 
 
 
 
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil diedit.
                                   </div>';
+          }
         }
       }
       ?>
@@ -347,25 +361,32 @@
         } else {
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
-
-          move_uploaded_file($tmpf, "../images/user/" . $nmf);
-
-          if ($_POST['pas_lama'] == $_POST['pas']) {
-            $pass = $_POST['pas'];
+          if ($_FILES['ft']['size'] > 5242880) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+              <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+              </div>';
           } else {
-            $pass = md5($_POST['pas']);
-          }
+            move_uploaded_file($tmpf, "../images/user/" . $nmf);
 
-          $sql = mysqli_query($koneksi, "UPDATE tb_dosen SET nm_dosen='$_POST[nm]',jekel='$_POST[jekel]',telp='$_POST[telp]',email='$_POST[email]',alamat='$_POST[alamat]',foto='$nmf',username='$_POST[user]',password='$pass' WHERE nidn='$_POST[id]'");
+            if ($_POST['pas_lama'] == $_POST['pas']) {
+              $pass = $_POST['pas'];
+            } else {
+              $pass = md5($_POST['pas']);
+            }
+
+            $sql = mysqli_query($koneksi, "UPDATE tb_dosen SET nm_dosen='$_POST[nm]',jekel='$_POST[jekel]',telp='$_POST[telp]',email='$_POST[email]',alamat='$_POST[alamat]',foto='$nmf',username='$_POST[user]',password='$pass' WHERE nidn='$_POST[id]'");
 
 
 
 
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil diedit.
                                   </div>';
+          }
         }
       }
       ?>
@@ -510,22 +531,29 @@
         } else {
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
-
-          move_uploaded_file($tmpf, "../images/user/" . $nmf);
-
-          if ($_POST['pas_lama'] == $_POST['pas']) {
-            $pass = $_POST['pas'];
+          if ($_FILES['ft']['size'] > 5242880) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+              <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+              </div>';
           } else {
-            $pass = md5($_POST['pas']);
-          }
+            move_uploaded_file($tmpf, "../images/user/" . $nmf);
 
-          $sql = mysqli_query($koneksi, "UPDATE tb_administrator SET foto='$nmf',username='$_POST[user]',password='$pass' WHERE id_admin='$_POST[id]'");
+            if ($_POST['pas_lama'] == $_POST['pas']) {
+              $pass = $_POST['pas'];
+            } else {
+              $pass = md5($_POST['pas']);
+            }
 
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+            $sql = mysqli_query($koneksi, "UPDATE tb_administrator SET foto='$nmf',username='$_POST[user]',password='$pass' WHERE id_admin='$_POST[id]'");
+
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil diedit.
                                   </div>';
+          }
         }
       }
       ?>
@@ -622,25 +650,29 @@
         } else {
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
-
-          move_uploaded_file($tmpf, "../images/user/" . $nmf);
-
-          if ($_POST['pas_lama'] == $_POST['pas']) {
-            $pass = $_POST['pas'];
+          if ($_FILES['ft']['size'] > 5242880) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+              <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+              </div>';
           } else {
-            $pass = md5($_POST['pas']);
-          }
+            move_uploaded_file($tmpf, "../images/user/" . $nmf);
 
-          $sql = mysqli_query($koneksi, "UPDATE tb_panitia SET nama='$_POST[nm]', logo='$nmf',username='$_POST[user]',password='$pass' WHERE id_panitia='$_POST[id]'");
+            if ($_POST['pas_lama'] == $_POST['pas']) {
+              $pass = $_POST['pas'];
+            } else {
+              $pass = md5($_POST['pas']);
+            }
 
+            $sql = mysqli_query($koneksi, "UPDATE tb_panitia SET nama='$_POST[nm]', logo='$nmf',username='$_POST[user]',password='$pass' WHERE id_panitia='$_POST[id]'");
 
-
-
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil diedit.
                                   </div>';
+          }
         }
       }
       ?>

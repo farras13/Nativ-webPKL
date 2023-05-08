@@ -39,11 +39,19 @@
                                 $now = date('Y-m-d');
                                 $a = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_mhs WHERE nobp='$_GET[id]'"));
                                 $a = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_mhs WHERE nobp='$_GET[id]'"));
-                                if ($lev == "Dosen"){
-                                    $tmpf = $_FILES['ft']['tmp_name'];
-                                    $nmf = $_FILES['ft']['name'];
-                                    move_uploaded_file($tmpf, "../images/kegiatan/" . $nmf);
-                                    $sql = mysqli_query($koneksi, "INSERT INTO `tb_log_mhs` (`nim`, `judul_kegiatan`, `kegiatan`, `link`, `photo`, `batas_waktu`, `tanggal`) VALUES ('$a[nobp]', '$_POST[judul]', '$_POST[deskripsi]', '$_POST[link]', '$nmf', '$_POST[bts]', '$now')");
+                                if ($lev == "Dosen") {
+                                    if ($_FILES['ft']['size'] > 5242880) {
+                                        echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">×</span></button>
+                                          <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                                          </div>';
+                                    } else {
+                                        $tmpf = $_FILES['ft']['tmp_name'];
+                                        $nmf = $_FILES['ft']['name'];
+                                        move_uploaded_file($tmpf, "../images/kegiatan/" . $nmf);
+                                        $sql = mysqli_query($koneksi, "INSERT INTO `tb_log_mhs` (`nim`, `judul_kegiatan`, `kegiatan`, `link`, `photo`, `batas_waktu`, `tanggal`) VALUES ('$a[nobp]', '$_POST[judul]', '$_POST[deskripsi]', '$_POST[link]', '$nmf', '$_POST[bts]', '$now')");
+                                    }
                                 } else {
                                     $sql = mysqli_query($koneksi, "INSERT INTO `tb_log_mhs` (`nim`, `judul_kegiatan`, `kegiatan`, `link`, `photo`, `batas_waktu`, `tanggal`) VALUES ('$a[nobp]', '$_POST[judul]', '$_POST[deskripsi]', '$_POST[link]', '','','$now')");
                                 }

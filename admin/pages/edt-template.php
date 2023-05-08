@@ -28,14 +28,22 @@
 
                         if (isset($_POST['b1'])) {
                             $id = $_GET['id'];
-                            
+
                             if ($_FILES['ft']['name'] == "") {
                                 $nmf = $_POST['ft_lama'];
                             } else {
-                                $tmpf = $_FILES['ft']['tmp_name'];
-                                $nmf = $_FILES['ft']['name'];
+                                if ($_FILES['ft']['size'] > 5242880) {
+                                    echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">×</span></button>
+                                      <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                                      </div>';
+                                } else {
+                                    $tmpf = $_FILES['ft']['tmp_name'];
+                                    $nmf = $_FILES['ft']['name'];
 
-                                move_uploaded_file($tmpf, "../file/" . $nmf);
+                                    move_uploaded_file($tmpf, "../file/" . $nmf);
+                                }
                             }
 
                             $now = date('Y-m-d');

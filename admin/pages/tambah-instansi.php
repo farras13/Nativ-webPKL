@@ -39,21 +39,28 @@
                                   <strong>Error!</strong> Data tidak boleh ada yang kosong.
                                   </div>';
               } else {
+                if ($_FILES['ft']['size'] > 5242880) {
+                  echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                    <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                    </div>';
+                } else {
+                  $tmpf = $_FILES['ft']['tmp_name'];
+                  $nmf = $_FILES['ft']['name'];
+                  move_uploaded_file($tmpf, "../images/user/" . $nmf);
 
-                $tmpf = $_FILES['ft']['tmp_name'];
-                $nmf = $_FILES['ft']['name'];
-                move_uploaded_file($tmpf, "../images/user/" . $nmf);
+                  $pass = md5($_POST['pass']);
 
-                $pass = md5($_POST['pass']);
-
-                // var_dump($koneksi);
-                $sql =  mysqli_query($koneksi, "INSERT INTO tb_pgw_lapangan VALUES (null, '$_POST[kd]', '$_POST[nama]', '$_POST[username]', '$pass', '$nmf')");
-                var_dump($sql);
-                echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+                  // var_dump($koneksi);
+                  $sql =  mysqli_query($koneksi, "INSERT INTO tb_pgw_lapangan VALUES (null, '$_POST[kd]', '$_POST[nama]', '$_POST[username]', '$pass', '$nmf')");
+                  var_dump($sql);
+                  echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
                                   <strong>Sukses!</strong> Data berhasil ditambah.
                                   </div>';
+                }
               }
             }
             ?>

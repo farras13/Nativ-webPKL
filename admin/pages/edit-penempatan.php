@@ -40,22 +40,29 @@
                   } else {
 
                     $instansi = $_POST['instansi'];
-                    
+
                     $cek = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_pgw_lapangan WHERE instansi_id = '$instansi'"));
                     if ($_FILES['ft']['name'] == "") {
                       $sql = mysqli_query($koneksi, "UPDATE tb_penempatan SET nobp='$_POST[mhs]', nobp2='$_POST[mhss]', nobp3='$_POST[mhsss]', kd_instansi='$_POST[instansi]', kd_lapangan='$cek[id]', periode='$_POST[periode]', status='$_POST[status]',tgl_mulai_pkl='$_POST[tglm]',tgl_akhir_pkl='$_POST[tgls]' WHERE kd_penempatan='$id'");
                     } else {
-                      $tmpf = $_FILES['ft']['tmp_name'];
-                      $nmf = $_FILES['ft']['name'];
-                      move_uploaded_file($tmpf, "../file/" . $nmf);
-                      $sql = mysqli_query($koneksi, "UPDATE tb_penempatan SET nobp='$_POST[mhs]', nobp2='$_POST[mhss]', nobp3='$_POST[mhsss]', kd_instansi='$_POST[instansi]', kd_lapangan='$cek[id]', periode='$_POST[periode]', status='$_POST[status]',tgl_mulai_pkl='$_POST[tglm]',tgl_akhir_pkl='$_POST[tgls]', surat_pengantar='$nmf' WHERE kd_penempatan='$id'");
-                     
-                    }   
-                    echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">×</span></button>
-                                  <strong>Sukses!</strong> Data berhasil diedit.
-                                  </div>';
+                      if ($_FILES['ft']['size'] > 5242880) {
+                        echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                          <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                          </div>';
+                      } else {
+                        $tmpf = $_FILES['ft']['tmp_name'];
+                        $nmf = $_FILES['ft']['name'];
+                        move_uploaded_file($tmpf, "../file/" . $nmf);
+                        $sql = mysqli_query($koneksi, "UPDATE tb_penempatan SET nobp='$_POST[mhs]', nobp2='$_POST[mhss]', nobp3='$_POST[mhsss]', kd_instansi='$_POST[instansi]', kd_lapangan='$cek[id]', periode='$_POST[periode]', status='$_POST[status]',tgl_mulai_pkl='$_POST[tglm]',tgl_akhir_pkl='$_POST[tgls]', surat_pengantar='$nmf' WHERE kd_penempatan='$id'");
+                        echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                                <strong>Sukses!</strong> Data berhasil diedit.
+                                </div>';
+                      }
+                    }
                   }
                 }
                 ?>

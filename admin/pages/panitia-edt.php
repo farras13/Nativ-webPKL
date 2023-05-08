@@ -43,11 +43,18 @@
 
                                         $nmf = $_POST['ft_lama'];
                                     } else {
+                                        if ($_FILES['ft']['size'] > 5242880) {
+                                            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">×</span></button>
+                                              <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                                              </div>';
+                                        } else {
+                                            $tmpf = $_FILES['ft']['tmp_name'];
+                                            $nmf = $_FILES['ft']['name'];
 
-                                        $tmpf = $_FILES['ft']['tmp_name'];
-                                        $nmf = $_FILES['ft']['name'];
-
-                                        move_uploaded_file($tmpf, "../images/user/" . $nmf);
+                                            move_uploaded_file($tmpf, "../images/user/" . $nmf);
+                                        }
                                     }
 
                                     if ($_POST['password'] != $_POST['password_lama']) {
@@ -83,7 +90,7 @@
                                         </div>
                                     </div>
                                     <br>
-                                    
+
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-lg-12 ">

@@ -37,12 +37,20 @@ include '../koneksi/koneksi.php';
               if ($_FILES['ft']['name'] == "") {
                 $nmf = null;
               } else {
-                $tmpf = $_FILES['ft']['tmp_name'];
-                $nmf = $_FILES['ft']['name'];
-                move_uploaded_file($tmpf, "../images/user/" . $nmf);
+                if ($_FILES['ft']['size'] > 5242880) {
+                  echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                    <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                    </div>';
+                } else {
+                  $tmpf = $_FILES['ft']['tmp_name'];
+                  $nmf = $_FILES['ft']['name'];
+                  move_uploaded_file($tmpf, "../images/user/" . $nmf);
+                }
               }
               for ($i = 0; $i < $_POST['no']; $i++) {
-                $nim = $_POST['nim'.$i];
+                $nim = $_POST['nim' . $i];
                 $cek = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_penilaian where nim = '$nim'"));
                 $nilai = $_POST['pb' . $i];
                 if ($nilai < 50) {
@@ -59,7 +67,7 @@ include '../koneksi/koneksi.php';
                   $abjad = "A";
                 }
                 $now = date('Y-m-d');
-                if ($cek != null) {            
+                if ($cek != null) {
                   if ($nmf != null) {
                     $sql = mysqli_query($koneksi, "UPDATE tb_penilaian SET foto='$nmf', nilai_angka_dospem='$nilai', nilai_abjad_dospem='$abjad'");
                   } else {
@@ -80,11 +88,11 @@ include '../koneksi/koneksi.php';
 
             ?>
             <form id="contactForm" action="" method="post" enctype="multipart/form-data">
-              <?php              
-                // $dosen = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_penempatan where dosen_id = '$id'"));                
-                $dosen = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_penempatan where kd_penempatan = '$nobp'"));                
-                $q = mysqli_query($koneksi, "SELECT tb_mhs.* FROM tb_mhs where nobp='$dosen[nobp]' or nobp='$dosen[nobp2]' or nobp='$dosen[nobp3]'");
-                // $q = mysqli_query($koneksi, "SELECT tb_mhs.* FROM tb_mhs where nobp='$dosen[nobp]' or nobp='$dosen[nobp2]' or nobp='$dosen[nobp3]'");
+              <?php
+              // $dosen = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_penempatan where dosen_id = '$id'"));                
+              $dosen = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_penempatan where kd_penempatan = '$nobp'"));
+              $q = mysqli_query($koneksi, "SELECT tb_mhs.* FROM tb_mhs where nobp='$dosen[nobp]' or nobp='$dosen[nobp2]' or nobp='$dosen[nobp3]'");
+              // $q = mysqli_query($koneksi, "SELECT tb_mhs.* FROM tb_mhs where nobp='$dosen[nobp]' or nobp='$dosen[nobp2]' or nobp='$dosen[nobp3]'");
               ?>
               <?php $n = 0;
               while ($d = mysqli_fetch_array($q)) { ?>

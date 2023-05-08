@@ -43,14 +43,22 @@
 
                       $nmf = $_POST['ft_lama'];
                     } else {
-                      $max_size = 2000000; // 2 MB in bytes
+                      $max_size = 5242880; // 2 MB in bytes
                       $tmpf = $_FILES['ft']['tmp_name'];
                       $nmf = $_FILES['ft']['name'];
                       $extension = pathinfo($nmf, PATHINFO_EXTENSION);
 
                       //generate a new file name
                       $new_name = uniqid() . '.' . $extension;
-                      move_uploaded_file($tmpf, "../images/user/" . $new_name);
+                      if ($_FILES['ft']['size'] > $max_size) {
+                        echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                          <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                          </div>';
+                      } else {
+                        move_uploaded_file($tmpf, "../images/user/" . $new_name);
+                      }
                     }
 
                     if ($_POST['password'] != $_POST['password_lama']) {

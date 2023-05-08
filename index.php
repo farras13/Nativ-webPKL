@@ -204,7 +204,7 @@
                                   </div>';
         } else {
 
-          $max_size = 1000000; // 1 MB in bytes
+          $max_size = 5242880; // 1 MB in bytes
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
 

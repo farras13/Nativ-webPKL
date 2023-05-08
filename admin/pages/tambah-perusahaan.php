@@ -39,7 +39,7 @@
                                   <strong>Error!</strong> Data tidak boleh ada yang kosong.
                                   </div>';
               } else {
-                $max_size = 2000000; // 1 MB in bytes
+                $max_size = 5242880; // 1 MB in bytes
                 $tmpf = $_FILES['ft']['tmp_name'];
                 $nmf = $_FILES['ft']['name'];
 
