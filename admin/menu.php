@@ -262,6 +262,18 @@
        <li class="treeview">
          <a href="#">
            <i class="fa fa-building-o"></i>
+           <span>Data Perusahaan</span>
+           <i class="fa fa-angle-left pull-right"></i>
+         </a>
+         <ul class="treeview-menu">
+           <li><a href="index.php?p=tambah-perusahaan"><i class="fa fa-circle-o"></i> Tambah Perusahaan </a></li>
+           <li><a href="index.php?p=list-instansi"><i class="fa fa-circle-o"></i> Data Perusahaan</a></li>
+         </ul>
+       </li>
+
+       <li class="treeview">
+         <a href="#">
+           <i class="fa fa-building-o"></i>
            <span>Pembimbing Lapangan</span>
            <i class="fa fa-angle-left pull-right"></i>
          </a>

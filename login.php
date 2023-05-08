@@ -56,8 +56,8 @@
       <p class="login-box-msg">Selamat Datang</p>
 
       <form action="login/login-proses.php" method="post">
-        <div class="form-group has-feedback">
-          <select name="level" class="form-control" required="">
+        <!-- <div class="form-group has-feedback">
+          <select name="level" class="form-control" >
             <option value="">- Level -</option>
             <option value="Administrator">Administrator</option>
             <option value="Prodi">Admin Prodi</option>
@@ -67,7 +67,7 @@
             <option value="Instansi">Perusahaan</option>
             <option value="Mahasiswa">Mahasiswa</option>
           </select>
-        </div>
+        </div> -->
         <div class="form-group has-feedback">
           <input type="text" class="form-control" placeholder="Username" name="user" required="">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>

@@ -38,8 +38,6 @@
           $sql = mysqli_query($koneksi, "UPDATE tb_adm_prodi SET nama='$_POST[nm]',jekel='$_POST[jekel]',email='$_POST[email]',alamat='$_POST[alamat]',foto='$nmf',username='$_POST[user]',password='$pass' WHERE kd_prodi='$_POST[id]'");
 
 
-
-
           echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">×</span></button>
@@ -60,7 +58,7 @@
 
                 <?php
 
-                $q = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_adm_prodi where kd_prodi='$_SESSION[id]'"));
+                  $q = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tb_adm_prodi where kd_prodi='$_SESSION[id]'"));
                 ?>
                 <img class="profile-user-img img-responsive img-circle" src="../images/user/<?= $q['foto'] ?>" alt="User profile picture">
 

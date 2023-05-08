@@ -76,8 +76,8 @@
             <div class="inner">
               <?php
 
-              $sql2 = mysqli_query($koneksi, "SELECT * FROM tb_nilai_dosen where nidn='$id'");
-              $q2 = mysqli_num_rows($sql2);
+                // $sql2 = mysqli_query($koneksi, "SELECT * FROM tb_nilai_dosen where nidn='$id'");
+                // $q2 = mysqli_num_rows($sql2);
               ?>
               <h3>Menu</h3>
               <p>Nilai Mahasiswa</p>
@@ -93,8 +93,8 @@
           <div class="small-box bg-yellow">
             <div class="inner">
               <?php
-              $sql3 = mysqli_query($koneksi, "SELECT * FROM tb_nilai_instansi,tb_mhs where tb_mhs.nidn_pembimbing='$id' and tb_nilai_instansi.nobp=tb_mhs.nobp");
-              $q3 = mysqli_num_rows($sql3);
+              // $sql3 = mysqli_query($koneksi, "SELECT * FROM tb_nilai_instansi,tb_mhs where tb_mhs.nidn_pembimbing='$id' and tb_nilai_instansi.nobp=tb_mhs.nobp");
+              // $q3 = mysqli_num_rows($sql3);
               ?>
               <h3>Menu</h3>
               <p>Log Kegiatan PKL</p>

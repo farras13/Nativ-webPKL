@@ -93,7 +93,7 @@
     <!-- /.login-logo -->
     <div class="tab">
       <button class="tablinks" onclick="openCity(event, 'Mahasiswa')" id="defaultOpen">Mahasiswa</button>
-      <button class="tablinks" onclick="openCity(event, 'Perusahaan')">Perusahaan</button>
+      <!-- <button class="tablinks" onclick="openCity(event, 'Perusahaan')">Perusahaan</button> -->
     </div>
     <div class="login-box-body tabcontent" id="Mahasiswa">
       <p class="login-box-msg">REGISTRASI MAHASISWA PKL</p>
@@ -115,15 +115,29 @@
         } else {
 
           $pass = md5($_POST['password']);
-
-          $sql = mysqli_query($koneksi, "INSERT INTO tb_mhs values ('$_POST[nobp]','$_POST[nama]','','','','$_POST[telp]','$_POST[email]','','','','$_POST[username]','$pass','','')");
-
-
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">×</span></button>
-                                  <strong>Sukses!</strong> Registrasi Berhasil Silahkan login dengan Username dan password yang anda daftarkan.
-                                  </div>';
+          $periode = $_POST['periode'];
+          $split_period = explode('/', $periode);
+          if (count($split_period) != 2) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                  <strong>Error!</strong> Pastikan inputan period benar !
+                  </div>';
+          }
+          if (strlen($split_period[0]) != 4 || strlen($split_period[1]) != 4) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                  <strong>Error!</strong> Pastikan inputan period berupa tahun seperti ' . date("Y", strtotime('-1 year')) . '/' . date('Y') . ' !
+                  </div>';
+          } else {
+            $sql = mysqli_query($koneksi, "INSERT INTO tb_mhs values ('$_POST[nobp]','$_POST[nama]','','','','$_POST[telp]','$_POST[email]','','','','$_POST[username]','$pass','',$periode)");
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span></button>
+                                    <strong>Sukses!</strong> Registrasi Berhasil Silahkan login dengan Username dan password yang anda daftarkan.
+                                    </div>';
+          }
         }
       }
       ?>
@@ -150,7 +164,10 @@
         </div>
         <div class="form-group has-feedback">
           <input type="password" class="form-control" placeholder="Password" name="password" required="">
-
+        </div>
+        <div class="form-group has-feedback">
+          <input type="text" name="periode" class="form-control" maxlength="100" placeholder="Periode PKL <?= date("Y", strtotime('-1 year')) . ' / ' . date('Y') ?>" required>
+          <small>* just input like <?= date("Y", strtotime('-1 year')) . ' / ' . date('Y') ?> </small>
         </div>
         <div class="row">
           <div class="col-xs-8">
@@ -167,17 +184,17 @@
           <!-- /.col -->
         </div>
       </form>
-
-
       <!-- /.login-box-body -->
     </div>
+
+    <!-- register perusahaan -->
     <div class="login-box-body tabcontent" id="Perusahaan">
       <p class="login-box-msg">REGISTRASI PERUSAHAAN PKL</p>
       <?php
       include './koneksi/koneksi.php';
 
       if (isset($_POST['b2'])) {
-        
+
         if (empty($_POST['telp']) or empty($_POST['nama'])) {
 
           echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
@@ -187,20 +204,36 @@
                                   </div>';
         } else {
 
+          $max_size = 1000000; // 1 MB in bytes
           $tmpf = $_FILES['ft']['tmp_name'];
           $nmf = $_FILES['ft']['name'];
-          move_uploaded_file($tmpf, "../images/user/" . $nmf);
 
-          $pass = md5($_POST['password']);
+          if ($_FILES['ft']['size'] > $max_size) {
+            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                    <strong>Error!</strong> File is too large. Maximum file size is 1 MB.
+                    </div>';
+          } else {
+            //get the file extension
+            $extension = pathinfo($nmf, PATHINFO_EXTENSION);
 
-          $sql = mysqli_query($koneksi, "INSERT INTO tb_instansi values ('$_POST[kd]','$_POST[nama]','$_POST[telp]','$_POST[fax]','$_POST[email]','$_POST[alamat]','$_POST[web]','','$nmf','$_POST[username]','$pass')");
+            //generate a new file name
+            $new_name = uniqid() . '.' . $extension;
 
+            // Upload the file or perform other actions
+            move_uploaded_file($tmpf, "../images/user/" . $new_name);
 
-          echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">×</span></button>
-                                  <strong>Sukses!</strong> Data berhasil ditambah.
-                                  </div>';
+            $pass = md5($_POST['password']);
+
+            $sql = mysqli_query($koneksi, "INSERT INTO tb_instansi values ('$_POST[kd]','$_POST[nama]','$_POST[telp]','$_POST[fax]','$_POST[email]','$_POST[alamat]','$_POST[web]','','$nmf','$_POST[username]','$pass')");
+
+            echo '<div class="alert alert-success alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                  <strong>Sukses!</strong> Data berhasil ditambah.
+                  </div>';
+          }
         }
       }
       ?>
